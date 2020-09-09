@@ -5,11 +5,17 @@ import './login.css';
 
 const Login = (props) => { 
 
+    const [errorMsg, setErrorMsg] = useState("")
+    const [errorMsgReg, setErrorMsgReg] = useState("")
     const [isError, setIsError] = useState(false)
-    const [data, setData] = useState({})
+    const [isErrorReg, setIsErrorReg] = useState(false)
+    const [data, setData] = useState({
+        email : "",
+        password : ""
+    })
     const [login, setLogin] = useState({
-    loginemail : "",
-    loginpassword : ""
+        loginemail : "",
+        loginpassword : ""
     })
 
     const handleChange = e => {
@@ -23,15 +29,28 @@ const Login = (props) => {
         })
     }
 
-    const handleReg = (e) => {
+    const handleReg = async (e) => {
         if(data.confirmpassword !== data.password){
-            alert("fail bro")
+            setErrorMsgReg("Las contraseñas no coinciden.");
+            setIsErrorReg(true);
             return;
         }
         try {
-            const resp = auth.createUserWithEmailAndPassword(data.email, data.password)
-            console.log(resp)
+            const resp = await auth.createUserWithEmailAndPassword(data.email, data.password);
+            console.log( resp );
         } catch (error) {
+            if(error.code === "auth/email-already-in-use"){
+                setErrorMsgReg("The email address is already in use by another account.");
+                setIsErrorReg(true);
+            }
+            if(error.code === "auth/invalid-password"){
+                setErrorMsgReg("Debe ser una string con al menos seis caracteres.");
+                setIsErrorReg(true);
+            }
+            if(error.code === "auth/weak-password"){
+                setErrorMsgReg("Password should be at least 6 characters");
+                setIsErrorReg(true);
+            }
             console.log(error)
         }
     }
@@ -46,12 +65,24 @@ const Login = (props) => {
             })
             props.history.push("/admin-dashboard")
         } catch (error) {
-            if(error.code == "auth/wrong-password"){
-                alert("The password is invalid or the user does not have a password.")
+            if(error.code === "auth/wrong-password"){
+                setErrorMsg("The password is invalid or the user does not have a password.");
+                setIsError(true);
+            }
+            if(error.code === "auth/invalid-password"){
+                setErrorMsg("Invalid password.");                
+                setIsError(true);
+            }
+            if(error.code === "auth/user-not-found"){
+                setErrorMsg("Invalid user.");                
                 setIsError(true);
             }
             console.log(error)
         }
+        setLogin({
+            loginemail : "" ,
+            loginpassword : ""
+        })
     }
     
     return (
@@ -61,7 +92,6 @@ const Login = (props) => {
             </div>
             <div className="d-flex justify-content-around colorcont">
                 <div className="register">
-                    {isError ? <p>Holis</p> : "" }
                     <h4 className="text-white mb-4">Sign Up</h4>
                     <form>
                         <div class="form-group">
@@ -76,6 +106,7 @@ const Login = (props) => {
                             <label for="exampleInputPassword1">Confirm password</label>
                             <input type="password" class="form-control" onChange={handleChange} name="confirmpassword" id="confirmpassword"/>
                         </div>
+                        {isErrorReg ? <p className="text-danger fontmsg">{errorMsgReg}</p> : "" }
                         <button type="button" class="mt-4 btn btn-outline-light btn-block" onClick={handleReg}>Create</button>
                     </form>
                 </div>
@@ -94,6 +125,7 @@ const Login = (props) => {
                         <div>
                             <a href="" className="text-decoration-none"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
                         </div>
+                        {isError ? <p className="text-danger fontmsg">{errorMsg}</p> : "" }
                         <button type="button" onClick={handleClick} class="mt-4 btn btn-outline-light btn-block">Sign In</button>
                     </form>
                 </div>
