@@ -1,11 +1,13 @@
 import React from 'react';
+import logo from '../image/Rectángulo 521.png';
+import search from '../image/search-find-magnify-glass.png';
 import "./dashboard.css";
 
 const Dashboard = () => {
     return (
         <> 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a className="navbar-brand" href="index.html">Rolling Firebase</a>
+        <a className="navbar-brand"><img src={logo} alt="" className="tamanologo"/></a>
         <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -108,14 +110,7 @@ const Dashboard = () => {
       </nav>
       <div className="content-wrapper">
         <div className="container-fluid">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="#">Dashboard</a>
-            </li>
-            <li className="breadcrumb-item active">My Dashboard</li>
-          </ol>
-
-          <div className="row">
+          <div className="row mt-5">
             <div className="col-xl-3 col-sm-6 mb-3">
               <div className="card text-white bg-primary o-hidden h-100">
                 <div className="card-body">
@@ -124,7 +119,7 @@ const Dashboard = () => {
                   </div>
                   <div className="mr-5">26 New Messages!</div>
                 </div>
-                <a className="card-footer text-white clearfix small z-1" href="#">
+                <a className="card-footer-orders text-white clearfix small z-1" href="#">
                   <span className="float-left">View Details</span>
                   <span className="float-right">
                     <i className="fa fa-angle-right"></i>
@@ -133,14 +128,14 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="col-xl-3 col-sm-6 mb-3">
-              <div className="card text-white bg-warning o-hidden h-100">
+              <div className="card text-white bg-primary o-hidden h-100">
                 <div className="card-body">
                   <div className="card-body-icon">
                     <i className="fa fa-fw fa-list"></i>
                   </div>
                   <div className="mr-5">11 New Tasks!</div>
                 </div>
-                <a className="card-footer text-white clearfix small z-1" href="#">
+                <a className="card-footer-task text-white clearfix small z-1" href="#">
                   <span className="float-left">View Details</span>
                   <span className="float-right">
                     <i className="fa fa-angle-right"></i>
@@ -149,14 +144,14 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="col-xl-3 col-sm-6 mb-3">
-              <div className="card text-white bg-success o-hidden h-100">
+              <div className="card text-white bg-primary o-hidden h-100">
                 <div className="card-body">
                   <div className="card-body-icon">
                     <i className="fa fa-fw fa-shopping-cart"></i>
                   </div>
                   <div className="mr-5">123 New Orders!</div>
                 </div>
-                <a className="card-footer text-white clearfix small z-1" href="#">
+                <a className="card-footer-first text-white clearfix small z-1" href="#">
                   <span className="float-left">View Details</span>
                   <span className="float-right">
                     <i className="fa fa-angle-right"></i>
@@ -165,14 +160,14 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="col-xl-3 col-sm-6 mb-3">
-              <div className="card text-white bg-danger o-hidden h-100">
+              <div className="card text-white bg-primary o-hidden h-100">
                 <div className="card-body">
                   <div className="card-body-icon">
                     <i className="fa fa-fw fa-support"></i>
                   </div>
                   <div className="mr-5">13 New Tickets!</div>
                 </div>
-                <a className="card-footer text-white clearfix small z-1" href="#">
+                <a className="card-footer-tickets text-white clearfix small z-1" href="#">
                   <span className="float-left">View Details</span>
                   <span className="float-right">
                     <i className="fa fa-angle-right"></i>
@@ -182,14 +177,10 @@ const Dashboard = () => {
             </div>
           </div>
 
-         <form className="form-inline my-2 my-lg-3 mr-lg-2">
+         <form className="form-inline my-2 my-lg-4 mr-lg-2">
                 <div className="input-group">
                   <input className="form-control" type="text" placeholder="Search for..." />
-                  <span className="input-group-append">
-                    <button className="btn btn-primary" type="button">
-                      <i className="fa fa-search"></i>
-                    </button>
-                  </span>
+                  <a href=""><img src={search} alt="" className="searchicon"/></a>
                 </div>
               </form>
           <div className="card mb-3">
@@ -197,7 +188,7 @@ const Dashboard = () => {
               <i className="fa fa-table"></i> Data Table Example</div>
             <div className="card-body">
               <div className="table-responsive">
-                <table className="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table className="table table-borderless" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>Name</th>
