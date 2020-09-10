@@ -1,7 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import "./dashboard.css";
+import { auth } from '../firebase';
+import { withRouter } from 'react-router-dom';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+
+
+  useEffect(() => {
+
+
+    const verifyUserAuth = () => {
+      const user = auth.currentUser;
+
+      if (user) {
+        return true
+      } else {
+        props.history.push('/')
+      }
+    }
+
+    verifyUserAuth();
+  
+   
+
+  }, []);
+
+
+
     return (
         <> 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -308,4 +333,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default withRouter(Dashboard);

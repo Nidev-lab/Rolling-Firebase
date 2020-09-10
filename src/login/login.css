@@ -73,3 +73,24 @@ label{
     font-size: 12px;
     margin: 0px;
 }
+
+.traslationLogin {
+    transform: translateX(-758px);
+    transition: 2s;
+}
+
+.hiddenRegister {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s, opacity 0.5s linear;
+}
+
+.traslationLoginReverse {
+    transform: translateX(0px);
+    transition: 2s;
+}
+
+.showRegister {
+    opacity: 1;
+    transition: visibility 1s, opacity 0.5s linear;
+}
