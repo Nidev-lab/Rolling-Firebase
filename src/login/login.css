@@ -73,6 +73,7 @@ label{
     font-size: 12px;
     margin: 0px;
 }
+<<<<<<< HEAD
 .modal-content{
     background-color: #fff0;
 }
@@ -86,4 +87,26 @@ label{
     position: absolute;
     right: 1rem;
     top: 1rem;
+=======
+
+.traslationLogin {
+    transform: translateX(-758px);
+    transition: 2s;
+}
+
+.hiddenRegister {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s, opacity 0.5s linear;
+}
+
+.traslationLoginReverse {
+    transform: translateX(0px);
+    transition: 2s;
+}
+
+.showRegister {
+    opacity: 1;
+    transition: visibility 1s, opacity 0.5s linear;
+>>>>>>> 828fa8de4b0dcbee0fb5eccab885317607058bb4
 }

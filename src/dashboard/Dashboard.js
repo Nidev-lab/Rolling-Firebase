@@ -1,9 +1,38 @@
+<<<<<<< HEAD
+import React, {useEffect} from 'react';
+=======
 import React from 'react';
 import logo from '../image/Rectángulo 521.png';
 import search from '../image/search-find-magnify-glass.png';
+>>>>>>> 27522807736c309878141152bb6febc89f1fb095
 import "./dashboard.css";
+import { auth } from '../firebase';
+import { withRouter } from 'react-router-dom';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+
+
+  useEffect(() => {
+
+
+    const verifyUserAuth = () => {
+      const user = auth.currentUser;
+
+      if (user) {
+        return true
+      } else {
+        props.history.push('/')
+      }
+    }
+
+    verifyUserAuth();
+  
+   
+
+  }, []);
+
+
+
     return (
         <> 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -299,4 +328,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default withRouter(Dashboard);
