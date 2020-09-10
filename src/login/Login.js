@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { withRouter } from 'react-router-dom';
 import {auth} from "../firebase";
+import cerrar from '../image/cerrar.png';
 import './login.css';
 
 const Login = (props) => { 
@@ -8,7 +9,9 @@ const Login = (props) => {
     const [regpass, setRegPass] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
     const [errorMsgReg, setErrorMsgReg] = useState("")
-    const [isError, setIsError] = useState(false)
+    const [isError, setIsError] = useState(false)    
+    const [isErrorDanger, setIsErrorDanger] = useState(false)
+    const [isErrorSuccess, setIsErrorSuccess] = useState(false)
     const [isErrorReg, setIsErrorReg] = useState(false)
     const [data, setData] = useState({
         email : "",
@@ -93,14 +96,23 @@ const Login = (props) => {
     const handleRegPass = async (e) => {
         try {
             const respregpass = await auth.sendPasswordResetEmail(regpass.regpass)
-            console.log(regpass.regpass)
+            if(respregpass === undefined){             
+                setIsErrorSuccess(true);
+                setIsErrorDanger(false);
+            }
+            setRegPass( regpass === "" )
+            console.log(regpass)
             console.log(respregpass)
         } catch (error) {
-
-            
+            if(error.code === "auth/user-not-found"){
+                setErrorMsg("There is no user record corresponding to this identifier.");                
+                setIsErrorDanger(true);
+                setIsErrorSuccess(false);
+            }
             console.log(error)
         }
     }
+
     
     return (
         <div className="containerlogin">
@@ -140,19 +152,32 @@ const Login = (props) => {
                             <input type="password" class="form-control" name="loginpassword" onChange={handleChange} id="loginpassword"/>
                         </div>
                         <div>
-                            <a href="" className="text-decoration-none"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
+                            <a href="" className="text-decoration-none" data-toggle="modal" data-target="#exampleModal"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
                         </div>
                         {isError ? <p className="text-danger fontmsg">{errorMsg}</p> : "" }
                         <button type="button" onClick={handleClick} class="mt-4 btn btn-outline-light btn-block">Sign In</button>
                     </form>
-                    <form>
-                        <div class="form-group mt-5">
-                            <label for="exampleInputEmail1">Email</label>
-                            <input type="email" class="form-control" name="regpass" id="regpass" onChange={handleChange} aria-describedby="emailHelp"/>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="" data-dismiss="modal">
+                            <img src={cerrar} alt="" className="cerraricon"/>
                         </div>
-                        {isError ? <p className="text-danger fontmsg">{errorMsg}</p> : "" }
-                        <button type="button" onClick={handleRegPass} class="mt-4 btn btn-outline-light btn-block">Enviar</button>
-                    </form>
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <h6>Enter your email to regenerate your password.</h6>
+                                    <form>
+                                        <div class="form-group mt-4">
+                                            <label for="exampleInputEmail1">Email</label>
+                                            <input value={regpass.regpass} type="email" class="form-control" name="regpass" id="regpass" onChange={handleChange} aria-describedby="emailHelp"/>
+                                        </div>
+                                        {isErrorDanger ? <p className="text-danger fontmsg">{errorMsg}</p> : "" }
+                                        {isErrorSuccess ? <p className="text-success fontmsg">We send you an email so you can choose your new password</p> : "" }
+                                        <button type="button" onClick={handleRegPass} class="mt-4 btn btn-outline-light btn-block">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
