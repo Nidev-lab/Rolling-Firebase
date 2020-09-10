@@ -10,21 +10,21 @@ const App = () => {
 
   const [firebaseUser, setFirebaseUser] = useState(false);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        setFirebaseUser(user);
-      } else {
-        setFirebaseUser(null);
-      }
-    })
+  //   auth.onAuthStateChanged(user => {
+  //     if (user) {
+  //       setFirebaseUser(user);
+  //     } else {
+  //       setFirebaseUser(null);
+  //     }
+  //   })
 
-  }, []);
+  // }, []);
 
+  // firebaseUser !== false ?
 
-
-  return firebaseUser !== false ? (
+  return  (
     <>
     <div className="App">
       <Router>
@@ -41,8 +41,8 @@ const App = () => {
     </>
   )
 
-  :
-  <p>Cargando</p>
+  // :
+  // <p>Cargando</p>
 };
 
 export default App;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { auth } from "../firebase";
-import { functions } from '../firebase';
+// import { functions } from '../firebase';
 import Alert from '../components/Alert/Alert';
 import './login.css';
 
@@ -162,17 +162,17 @@ const Login = (props) => {
   }
 
 
-  const addAdmin = () => {
+  // const addAdmin = () => {
 
-    const addRole = functions.httpsCallable('addAdmin');
-    addRole({ email: data.email })
-      .then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
-      })
+  //   const addRole = functions.httpsCallable('addAdmin');
+  //   addRole({ email: data.email })
+  //     .then(res => {
+  //       console.log(res)
+  //     }).catch(err => {
+  //       console.log(err)
+  //     })
 
-  }
+  // }
 
   const handleShowSignUp = () => {
 
