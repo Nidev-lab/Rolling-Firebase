@@ -5,6 +5,7 @@ import './login.css';
 
 const Login = (props) => { 
 
+    const [regpass, setRegPass] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
     const [errorMsgReg, setErrorMsgReg] = useState("")
     const [isError, setIsError] = useState(false)
@@ -27,6 +28,10 @@ const Login = (props) => {
             ...login,
             [e.target.name]: e.target.value,
         })
+        setRegPass({
+            [e.target.name]: e.target.value,
+        })
+        console.log(regpass)
     }
 
     const handleReg = async (e) => {
@@ -84,6 +89,18 @@ const Login = (props) => {
             loginpassword : ""
         })
     }
+
+    const handleRegPass = async (e) => {
+        try {
+            const respregpass = await auth.sendPasswordResetEmail(regpass.regpass)
+            console.log(regpass.regpass)
+            console.log(respregpass)
+        } catch (error) {
+
+            
+            console.log(error)
+        }
+    }
     
     return (
         <div className="containerlogin">
@@ -127,6 +144,14 @@ const Login = (props) => {
                         </div>
                         {isError ? <p className="text-danger fontmsg">{errorMsg}</p> : "" }
                         <button type="button" onClick={handleClick} class="mt-4 btn btn-outline-light btn-block">Sign In</button>
+                    </form>
+                    <form>
+                        <div class="form-group mt-5">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="email" class="form-control" name="regpass" id="regpass" onChange={handleChange} aria-describedby="emailHelp"/>
+                        </div>
+                        {isError ? <p className="text-danger fontmsg">{errorMsg}</p> : "" }
+                        <button type="button" onClick={handleRegPass} class="mt-4 btn btn-outline-light btn-block">Enviar</button>
                     </form>
                 </div>
             </div>
