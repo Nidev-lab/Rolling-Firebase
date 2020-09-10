@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { auth } from "../firebase";
 // import { functions } from '../firebase';
@@ -16,6 +16,7 @@ const Login = (props) => {
   const [isVisibleRegister, setIsVisibleRegister] = useState(false);
   const [isVisibleLogin, setIsVisibleLogin] = useState(false);
   const [isErrorReg, setIsErrorReg] = useState(false);
+  const [isEditing, setEditing] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -25,6 +26,7 @@ const Login = (props) => {
     loginemail: "",
     loginpassword: ""
   });
+  const inputRef = useRef(null);
 
   const handleChange = e => {
     setData({
@@ -36,6 +38,14 @@ const Login = (props) => {
       [e.target.name]: e.target.value,
     });
   }
+
+
+  useEffect(() => {
+
+    if (isEditing) {
+      inputRef.current.focus();
+    }     
+  }, [isEditing]);
 
 
   const handleReg = async (e) => {
@@ -78,6 +88,7 @@ const Login = (props) => {
           loginemail: "",
           loginpassword: ""
         });
+        setEditing(true)
 
       }
 
@@ -118,7 +129,7 @@ const Login = (props) => {
         loginpassword: ""
       })
 
-      if (resplogin) {
+      if (resplogin.user.uid) {
         props.history.push("/admin-dashboard")
       }
 
@@ -218,11 +229,11 @@ const Login = (props) => {
           <form>
             <div class="form-group">
               <label for="exampleInputEmail1">Email</label>
-              <input type="email" class="form-control" value={login.loginemail} name="loginemail" id="loginemail" onChange={handleChange} aria-describedby="emailHelp" />
+              <input type="email" class="form-control" ref={inputRef} autoComplete="off" value={login.loginemail} name="loginemail" id="loginemail" onChange={handleChange} aria-describedby="emailHelp" />
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" value={login.loginpassword} name="loginpassword" onChange={handleChange} id="loginpassword" />
+              <input type="password" class="form-control" autoComplete="off" value={login.loginpassword} name="loginpassword" onChange={handleChange} id="loginpassword" />
             </div>
             <div>
               <a href="" className="text-decoration-none"><p className="tamanorememberpass">¿Olvidaste tu contraseña?</p></a>
