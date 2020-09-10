@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-import React, {useEffect} from 'react';
-=======
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from '../image/Rectángulo 521.png';
 import search from '../image/search-find-magnify-glass.png';
->>>>>>> 27522807736c309878141152bb6febc89f1fb095
 import "./dashboard.css";
 import { auth } from '../firebase';
 import { withRouter } from 'react-router-dom';
@@ -14,29 +10,37 @@ const Dashboard = (props) => {
 
   useEffect(() => {
 
+    
+  const verifyRole = () => {
 
-    const verifyUserAuth = () => {
-      const user = auth.currentUser;
-
-      if (user) {
-        return true
-      } else {
-        props.history.push('/')
-      }
+    if (auth.currentUser) {
+      auth.onAuthStateChanged(user => {
+        user.getIdTokenResult()
+          .then(idTokenResult => {
+            if (!idTokenResult.claims.admin) {
+              props.history.push('/')
+            } 
+          }).catch(error => {
+            if (error) {
+              props.history.push('/')
+            }
+          })
+      })
+    } else {
+      props.history.push("/")
     }
+  }
 
-    verifyUserAuth();
-  
-   
+   verifyRole();
 
   }, []);
 
 
 
-    return (
-        <> 
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a className="navbar-brand"><img src={logo} alt="" className="tamanologo"/></a>
+  return (
+    <>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a className="navbar-brand"><img src={logo} alt="" className="tamanologo" /></a>
         <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -206,12 +210,12 @@ const Dashboard = (props) => {
             </div>
           </div>
 
-         <form className="form-inline my-2 my-lg-4 mr-lg-2">
-                <div className="input-group">
-                  <input className="form-control" type="text" placeholder="Search for..." />
-                  <a href=""><img src={search} alt="" className="searchicon"/></a>
-                </div>
-              </form>
+          <form className="form-inline my-2 my-lg-4 mr-lg-2">
+            <div className="input-group">
+              <input className="form-control" type="text" placeholder="Search for..." />
+              <a href=""><img src={search} alt="" className="searchicon" /></a>
+            </div>
+          </form>
           <div className="card mb-3">
             <div className="card-header">
               <i className="fa fa-table"></i> Data Table Example</div>
@@ -324,8 +328,8 @@ const Dashboard = (props) => {
           </div>
         </div>
       </div>
-      </>
-    );
+    </>
+  );
 };
 
 export default withRouter(Dashboard);
